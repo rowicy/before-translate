@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "BeforeTranslate",
+  "description": "翻訳前にコードタグを整形します。",
+  "version": "1.3.0",
+  "permissions": [
+    "contextMenus",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content_scripts/protect_trans.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "commands": {
+    "sanitize": {
+      "suggested_key": {
+        "default": "Alt+T"
+      },
+      "description": "翻訳前にコードタグを整形する"
+    }
+  }
+}
