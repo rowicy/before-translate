@@ -7,8 +7,8 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "beforeTranslate") sanitize(tab.id);
 });
 
-chrome.commands.onCommand.addListener((command, tab) => {
-  if (command === "sanitize") sanitize(tab.id);
+chrome.runtime.onMessage.addListener((msg, sender) => {
+  if (msg === "sanitize") sanitize(sender.tab.id);
 });
 
 chrome.runtime.onInstalled.addListener(() => {

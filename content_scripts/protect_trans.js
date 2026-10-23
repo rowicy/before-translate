@@ -156,4 +156,17 @@
     });
   }
 
+  // Chrome can't bind a shortcut from the extension, so match the recorded combo here.
+  // Capture phase at document_start: the page can't swallow it first.
+  let shortcut = DEFAULT_SHORTCUT;
+  chrome.storage.sync.get({ shortcut }).then(v => { shortcut = v.shortcut; });
+  chrome.storage.onChanged.addListener(c => {
+    if (c.shortcut) shortcut = c.shortcut.newValue;
+  });
+  window.addEventListener('keydown', e => {
+    if (comboOf(e) !== shortcut) return;
+    e.preventDefault();
+    chrome.runtime.sendMessage('sanitize');
+  }, true);
+
 })();

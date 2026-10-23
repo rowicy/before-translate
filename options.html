@@ -2,12 +2,71 @@
 <meta charset="utf-8">
 <title>BeforeTranslate</title>
 <style>
-  body { font: 13px/1.6 system-ui, sans-serif; padding: 16px; min-width: 320px; }
-  code { background: #0001; padding: 1px 5px; border-radius: 4px; }
+  :root {
+    color-scheme: light dark;
+    --bg: #fff;
+    --fg: #111;
+    --muted: #767676;
+    --line: #e2e2e2;
+    --card: #f6f6f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171717;
+      --fg: #f0f0f0;
+      --muted: #9b9b9b;
+      --line: #303030;
+      --card: #212121;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 20px;
+    width: 320px;
+    font: 14px/1.6 system-ui, sans-serif;
+    color: var(--fg);
+    background: var(--bg);
+    text-align: center;
+  }
+  header { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 18px; }
+  header img { width: 32px; height: 32px; border-radius: 8px; filter: grayscale(1); }
+  h1 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .01em; }
+  header p { margin: 0; font-size: 12px; color: var(--muted); }
+  label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  #record {
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    width: 100%; min-height: 48px; padding: 10px;
+    font: inherit; color: var(--fg); background: var(--card);
+    border: 1px solid var(--line); border-radius: 10px;
+    cursor: pointer; transition: border-color .15s, background .15s;
+  }
+  #record:hover { border-color: var(--muted); }
+  #record:focus-visible { outline: none; border-color: var(--fg); }
+  #record.recording {
+    border-color: var(--fg); background: var(--bg);
+    color: var(--muted); font-size: 13px;
+  }
+  kbd {
+    font: 600 12px/1 ui-monospace, monospace;
+    padding: 6px 8px; border-radius: 6px;
+    background: var(--bg); border: 1px solid var(--line);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  #hint { margin: 8px 0 0; font-size: 11px; color: var(--muted); text-align: center; }
 </style>
 
-<p>整形 (<code>sanitize</code>) をショートカットキーで実行できます。</p>
-<p id="current">読み込み中…</p>
-<button id="open">ショートカットを設定</button>
+<header>
+  <img src="icons/icon-48.png" alt="">
+  <div>
+    <h1>BeforeTranslate</h1>
+    <p>翻訳前にコードタグを整形</p>
+  </div>
+</header>
 
+<label for="record">ショートカット</label>
+<button id="record"></button>
+<p id="hint">クリックして新しいキーを押す</p>
+
+<script src="content_scripts/shortcut.js"></script>
 <script src="options.js"></script>
